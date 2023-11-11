@@ -3,6 +3,8 @@ class ProductsController < ApplicationController
     @products = Product.all
   end
 
-    def show
-    end
+  def show
+    @product = Product.find(params[:id])
+    @related_products = Product.all.order('created_at desc').limit(4)
+  end
 end
