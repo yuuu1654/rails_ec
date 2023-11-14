@@ -1,0 +1,21 @@
+<% products.each do |product| %>
+  <div class="col mb-5">
+    <div class="card h-100">
+      <!-- Product image-->
+      <%= product.image.attached? ? image_tag(product.image) : "画像が存在しません" %>
+      <!-- Product details-->
+      <div class="card-body p-4">
+        <div class="text-center">
+          <!-- Product name-->
+          <h5 class="fw-bolder"><%= link_to product.name, product_path(product), class: "product-title" %></h5>
+          <!-- Product price-->
+          <%= number_to_currency(product.price, unit: "円", format: "%n%u", delimiter: ",", precision: 0) %>
+        </div>
+      </div>
+      <!-- Product actions-->
+      <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">カートに入れる</a></div>
+      </div>
+    </div>
+  </div>
+<% end %>
