@@ -1,17 +1,5 @@
 # frozen_string_literal: true
 
-# product = Product.create!(
-#     name: "アマゾナイト",
-#     price: 1800,
-#     description: "綺麗なアマゾナイトです"
-# )
-
-# # サンプル画像のパスを取得
-# image_path = Rails.root.join("app/assets/images", "アマゾナイト.png")
-
-# # Active Storage を使用して画像を添付
-# product.image.attach(io: File.open(image_path), filename: "アマゾナイト.png", content_type: "image/png")
-
 products_data = [
   { name: 'アマゾナイト',
     price: 2480,
