@@ -60,7 +60,6 @@ products_data.each do |data|
     name: data[:name],
     price: data[:price],
     description: data[:description]
-    # image_name: data[:image_name]
   )
 
   # サンプル画像のパスを取得
