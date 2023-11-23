@@ -6,4 +6,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root 'products#index'
   get 'products/:id', to: 'products#show', as: 'product'
+
+  namespace :admin do
+    resources :products
+  end
 end
