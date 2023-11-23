@@ -7,16 +7,27 @@
       <div class="card-body p-4">
         <div class="text-center">
           <!-- Product name-->
-          <h5 class="fw-bolder"><%= link_to product.name, product_path(product), class: "product-title" %></h5>
+          <h5 class="fw-bolder">
+            <% if admin %>
+              <%= link_to product.name, admin_product_path(product), class: "product-title" %>
+            <% else %>
+              <%= link_to product.name, product_path(product), class: "product-title" %>
+            <% end %>
+          </h5>
           <!-- Product price-->
           <%= number_to_currency(product.price, unit: "円", format: "%n%u", delimiter: ",", precision: 0) %>
         </div>
       </div>
       <!-- Product actions-->
       <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">カートに入れる</a></div>
+        <div class="text-center">
+          <% if admin %>
             <%= link_to "編集", edit_admin_product_path(product), class: "btn btn-secondary" %>
             <%= link_to "削除", admin_product_path(product), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
+          <% else %>
+            <a class="btn btn-outline-dark mt-auto" href="#">カートに入れる</a>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
