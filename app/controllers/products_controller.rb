@@ -11,6 +11,26 @@ class ProductsController < ApplicationController
     @related_products = Product.all.order('created_at desc').limit(4)
   end
 
+  def add_to_cart
+    # この関数はカートに追加する為だけの処理なので、インスタンス変数は使わない(メモリの節約・データのカプセル化)
+    product_id = params[:product_id].to_i
+    quantity = params[:quantity].present? ? params[:quantity].to_i : 1
+    session[:cart] ||= []
+    # セッション内のカートから、現在追加しようとしている商品(@product.id)と一致する商品を探す
+    item = session[:cart].find { |i| i[:product_id] == product_id }
+    if item
+      item[:quantity] += quantity
+    else
+      session[:cart] << { product_id:, quantity: }
+    end
+    redirect_to products_path
+  end
+
+  def remove_from_cart
+    session[:cart].delete_if { |item| item['product_id'].to_i == params[:product_id].to_i }
+    redirect_to cart_path
+  end
+
   def show_cart
     @cart_items = session[:cart] || []
     logger.debug "cart_items: #{@cart_items.inspect}"
