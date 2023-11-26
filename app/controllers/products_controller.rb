@@ -2,6 +2,7 @@
 
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show]
+  before_action :admin?, only: %i[index show]
   def index
     @products = Product.all
   end
@@ -14,5 +15,9 @@ class ProductsController < ApplicationController
 
   def set_product
     @product = Product.find(params[:id])
+  end
+
+  def admin?
+    @admin = false
   end
 end
