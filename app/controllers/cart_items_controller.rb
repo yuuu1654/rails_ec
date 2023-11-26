@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CartItemsController < ApplicationController
   def create
     # この関数はカートに追加する為だけの処理なので、インスタンス変数は使わない(メモリの節約・データのカプセル化)
