@@ -2,19 +2,18 @@
 
 Rails.application.routes.draw do
   root 'products#index'
+  resources :products, only: %i[index show]
+
   # 商品管理機能
   namespace :admin do
     resources :products
   end
+
   # カート機能
-  resources :products, only: %i[index show] do
-    # post '/products/add_to_cart' to: 'product#show'
-    # post '/products/:id/add_to_cart' to: 'product#show'
-    member do
-      post :add_to_cart # 商品詳細ページからのアクション / URL: /products/:id/add_to_cart
-    end
-  end
-  get '/cart', to: 'products#show_cart'
-  post '/add_to_cart', to: 'products#add_to_cart' # 商品一覧ページからのアクション
-  delete '/remove_from_cart/:product_id', to: 'products#remove_from_cart', as: 'remove_from_cart'
+  get '/cart', to: 'cart_items#show'
+  # 商品一覧ページからカート追加するルート
+  post 'cart_items/create', to: 'cart_items#create', as: 'add_to_cart_from_products_index'
+  # 商品詳細ページからカート追加するルート
+  post '/products/:id/create', to: 'cart_items#create', as: 'add_to_cart_from_products_show'
+  delete 'cart_items/destroy/:product_id', to: 'cart_items#destroy', as: 'remove_from_cart'
 end
