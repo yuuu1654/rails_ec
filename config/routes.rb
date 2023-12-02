@@ -10,10 +10,10 @@ Rails.application.routes.draw do
   end
 
   # カート機能
-  get '/cart', to: 'cart_items#show'
+  get '/cart', to: 'cart_products#show'
   # 商品一覧ページからカート追加するルート
-  post 'cart_items/create', to: 'cart_items#create', as: 'add_to_cart_from_products_index'
+  post 'cart_products/create', to: 'cart_products#create', as: 'add_to_cart_from_products_index'
   # 商品詳細ページからカート追加するルート
-  post '/products/:id/create', to: 'cart_items#create', as: 'add_to_cart_from_products_show'
-  delete 'cart_items/destroy/:product_id', to: 'cart_items#destroy', as: 'remove_from_cart'
+  post '/products/:id/create', to: 'cart_products#create', as: 'add_to_cart_from_products_show'
+  delete 'cart_products/destroy/:product_id', to: 'cart_products#destroy', as: 'remove_from_cart'
 end
