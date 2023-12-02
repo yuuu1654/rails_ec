@@ -1,11 +1,11 @@
+# frozen_string_literal: true
+
 class CartProductsController < ApplicationController
-  before_action :set_cart_product, only: [:create, :destroy]
-  
+  before_action :set_cart_product, only: %i[create destroy]
+
   def create
-    if @cart_product.blank?
-      @cart_product = current_cart.cart_products.build(product_id: params[:product_id])
-    end
-    @cart_product.quantity ||= 0 #nilだと以下の加算ができないので追記
+    @cart_product = current_cart.cart_products.build(product_id: params[:product_id]) if @cart_product.blank?
+    @cart_product.quantity ||= 0 # nilだと以下の加算ができないので追記
     @cart_product.quantity += params[:quantity].present? ? params[:quantity].to_i : 1
     @cart_product.save
     redirect_to products_path
