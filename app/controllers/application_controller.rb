@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  # コントローラ内で定義したメソッドをビューのテンプレート内でも使えるようにする
-  helper_method :current_cart
+  private
 
   def current_cart
     if session[:cart_id]

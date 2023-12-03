@@ -2,9 +2,11 @@
 
 class CartProductsController < ApplicationController
   before_action :set_cart_product, only: %i[create destroy]
+  before_action :current_cart, only: %i[create show]
 
   def create
-    @cart_product = current_cart.cart_products.build(product_id: params[:product_id]) if @cart_product.blank?
+    # カートに追加しようとする商品が既にあれば、指定された数量だけ足すようにする
+    @cart_product = @cart.cart_products.build(product_id: params[:product_id]) if @cart_product.blank?
     @cart_product.quantity ||= 0 # nilだと以下の加算ができないので追記
     @cart_product.quantity += params[:quantity].present? ? params[:quantity].to_i : 1
     @cart_product.save
@@ -12,7 +14,7 @@ class CartProductsController < ApplicationController
   end
 
   def show
-    @cart_products = current_cart.cart_products
+    @cart_products = @cart.cart_products
     @cart_details = @cart_products.map do |item|
       product = Product.find(item.product_id)
       total_price = product.price * item.quantity
