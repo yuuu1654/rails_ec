@@ -15,35 +15,7 @@
   </head>
   <body>
     <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#!">Jewelry Labo</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-            <%# <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li> %>
-            <%= link_to "Home", root_path, class: "nav-link active" %>
-            <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#!">All Products</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-              </ul>
-            </li>
-          </ul>
-          <form class="d-flex">
-            <button class="btn btn-outline-dark" type="submit">
-              <i class="bi-cart-fill me-1"></i>
-              Cart
-              <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-            </button>
-          </form>
-        </div>
-      </div>
-    </nav>
+    <%= render "layouts/navigation", cart: @cart %>
     <!-- Product section-->
     <section class="py-5">
       <div class="container px-4 px-lg-5 my-5">
@@ -56,13 +28,16 @@
               <%= number_to_currency(@product.price, unit: "円", format: "%n%u", delimiter: ",", precision: 0) %>
             </div>
             <p class="lead"><%= @product.description %></p>
-            <div class="d-flex">
-              <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
-              <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                <i class="bi-cart-fill me-1"></i>
-                Add to cart
-              </button>
-            </div>
+            <%# カートに指定した個数分だけ商品追加 %>
+            <%= form_with url: add_to_cart_from_products_show_path(product_id: @product.id), method: :post, local: true do |form| %>
+              <div class="d-flex">
+                <%= form.select :quantity, options_for_select(1..20, 1), {}, {class: "form-control text-center me-3", style: "max-width: 3rem"} %>
+                <%= form.button type: 'submit', class: 'btn btn-outline-dark flex-shrink-0' do %>
+                  <i class="bi-cart-fill me-1"></i>
+                  Add to cart
+                <% end %>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>

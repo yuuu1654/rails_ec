@@ -3,6 +3,7 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show]
   before_action :admin?, only: %i[index show]
+  before_action :current_cart, only: %i[index show]
   def index
     @products = Product.all
   end
