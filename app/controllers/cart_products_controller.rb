@@ -5,7 +5,6 @@ class CartProductsController < ApplicationController
   before_action :current_cart, only: %i[create show]
 
   def create
-    # カートに追加しようとする商品が既にあれば、指定された数量だけ足すようにする
     @cart_product = @cart.cart_products.build(product_id: params[:product_id]) if @cart_product.blank?
     @cart_product.quantity ||= 0 # nilだと以下の加算ができないので追記
     @cart_product.quantity += params[:quantity].present? ? params[:quantity].to_i : 1
