@@ -13,6 +13,8 @@ class CartProductsController < ApplicationController
   end
 
   def show
+    # @orderの表示エラーが起こらないようにする(→インスタンス変数の初期化)
+    @order = Order.new
     @cart_products = @cart.cart_products
     @cart_details = @cart_products.map do |item|
       product = Product.find(item.product_id)

@@ -57,6 +57,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_27_222246) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.bigint "cart_id", null: false
+    t.string "name"
+    t.string "username"
+    t.string "email"
+    t.string "address"
+    t.string "card_name"
+    t.string "card_number"
+    t.string "card_expires"
+    t.string "card_cvv"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_orders_on_cart_id"
+  end
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.integer "price"
@@ -69,4 +83,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_27_222246) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cart_products", "carts"
   add_foreign_key "cart_products", "products"
+  add_foreign_key "orders", "carts"
 end
