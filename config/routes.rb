@@ -16,4 +16,6 @@ Rails.application.routes.draw do
   # 商品詳細ページからカート追加するルート
   post '/products/:id/create', to: 'cart_products#create', as: 'add_to_cart_from_products_show'
   delete 'cart_products/destroy/:product_id', to: 'cart_products#destroy', as: 'remove_from_cart'
+  # チェックアウト機能
+  post "/checkout", to: "checkouts#create"
 end
