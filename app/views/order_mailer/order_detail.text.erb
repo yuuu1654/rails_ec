@@ -1,7 +1,27 @@
 <h1>購入明細</h1>
 
-<p>
-  <%= @order_details.each do |order_detail| %>
-    <h5><%= order_detail %></h5>
-  <% end %>
-</p>
+<table style="width: 100%; border-collapse: collapse;">
+  <thead>
+    <tr style="background-color: #f2f2f2;">
+      <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">商品名</th>
+      <th style="border: 1px solid #dddddd; text-align: right; padding: 8px;">単価</th>
+      <th style="border: 1px solid #dddddd; text-align: right; padding: 8px;">数量</th>
+      <th style="border: 1px solid #dddddd; text-align: right; padding: 8px;">合計</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order_details.each do |order_detail| %>
+      <tr>
+        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;"><%= order_detail.product_name %></td>
+        <td style="border: 1px solid #dddddd; text-align: right; padding: 8px;"><%= order_detail.price %>円</td>
+        <td style="border: 1px solid #dddddd; text-align: right; padding: 8px;"><%= order_detail.quantity %></td>
+        <td style="border: 1px solid #dddddd; text-align: right; padding: 8px;"><%= order_detail.total_price %>円</td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="3" style="border: 1px solid #dddddd; text-align: right; padding: 8px;">お支払い総額</td>
+      <td style="border: 1px solid #dddddd; text-align: right; padding: 8px;"><%= @order_details.sum { |item| item.total_price } %>円</td>
+    </tr>
+  </tbody>
+</table>
+
