@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  # dev環境でメール送信を確認
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
   root 'products#index'
   resources :products, only: %i[index show]
 
