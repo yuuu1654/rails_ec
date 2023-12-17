@@ -20,6 +20,8 @@ class CartProductsController < ApplicationController
 
   def destroy
     @cart_product.destroy
+    @product = Product.find(@cart_product.product_id)
+    flash[:notice] = "#{@product.name}を削除しました"
     redirect_to cart_path
   end
 
