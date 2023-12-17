@@ -29,6 +29,7 @@ class CheckoutsController < ApplicationController
       redirect_to products_path
     else
       redirect_to cart_path
+      set_cart_details # カートの中身が残るようにする
     end
   end
 

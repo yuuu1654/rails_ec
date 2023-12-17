@@ -17,4 +17,14 @@ class ApplicationController < ActionController::Base
       username == 'admin' && password == 'ps'
     end
   end
+
+  def set_cart_details
+    @cart_products = @cart.cart_products
+    @cart_details = @cart_products.map do |item|
+      product = Product.find(item.product_id)
+      total_price = product.price * item.quantity
+      { product:, quantity: item.quantity, total_price: }
+    end
+    @billed_amount = @cart_details.sum { |item| item[:total_price] }
+  end
 end

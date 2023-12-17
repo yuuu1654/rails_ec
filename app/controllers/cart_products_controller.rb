@@ -3,6 +3,7 @@
 class CartProductsController < ApplicationController
   before_action :set_cart_product, only: %i[create destroy]
   before_action :current_cart, only: %i[create show]
+  before_action :set_cart_details, only: [:show]
 
   def create
     @cart_product = @cart.cart_products.build(product_id: params[:product_id]) if @cart_product.blank?
@@ -15,14 +16,6 @@ class CartProductsController < ApplicationController
   def show
     # @orderの表示エラーが起こらないようにする(→インスタンス変数の初期化)
     @order = Order.new
-    @cart_products = @cart.cart_products
-    @cart_details = @cart_products.map do |item|
-      product = Product.find(item.product_id)
-      total_price = product.price * item.quantity
-      { product:, quantity: item.quantity, total_price: }
-    end
-    logger.debug "cart_details_st: #{@cart_details.inspect}"
-    @billed_amount = @cart_details.sum { |item| item[:total_price] }
   end
 
   def destroy
