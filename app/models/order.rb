@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Order < ApplicationRecord
   belongs_to :cart, optional: true # orderがなくてもcartは存在する
   has_many :order_details, dependent: :destroy
