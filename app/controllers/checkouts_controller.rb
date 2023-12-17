@@ -39,8 +39,10 @@ class CheckoutsController < ApplicationController
       reset_session # カートを空にする
       redirect_to products_path
     else
-      redirect_to cart_path
       set_cart_details # カートの中身が残るようにする
+      # TODO: エラーメッセージを表示させようとすると入力された値が消えてしまう問題を解決
+      # render template: "cart_products/show", status: :unprocessable_entity
+      render template: "cart_products/show"
     end
   end
 
