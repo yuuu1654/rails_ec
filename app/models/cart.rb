@@ -2,5 +2,5 @@
 
 class Cart < ApplicationRecord
   has_many :cart_products, dependent: :destroy
-  has_one :order
+  has_one :order, dependent: :destroy
 end
