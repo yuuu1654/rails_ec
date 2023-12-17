@@ -1,13 +1,19 @@
+# frozen_string_literal: true
+
 class ChangeCreditCardInfoType < ActiveRecord::Migration[7.0]
   def up
-    change_column :orders, :card_number, :string
-    change_column :orders, :card_expires, :string
-    change_column :orders, :card_cvv, :string
+    change_table :orders, bulk: true do |t|
+      t.change :card_number, :string
+      t.change :card_expires, :string
+      t.change :card_cvv, :string
+    end
   end
 
   def down
-    change_column :orders, :card_number, :integer
-    change_column :orders, :card_expires, :integer
-    change_column :orders, :card_cvv, :integer
+    change_table :orders, bulk: true do |t|
+      t.change :card_number, :integer
+      t.change :card_expires, :integer
+      t.change :card_cvv, :integer
+    end
   end
 end
