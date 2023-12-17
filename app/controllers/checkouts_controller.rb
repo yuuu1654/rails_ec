@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class CheckoutsController < ApplicationController
-  before_action :current_cart, only: [:index, :show, :create]
-  before_action :basic_auth, only: [:index, :show]
+  before_action :current_cart, only: %i[index show create]
+  before_action :basic_auth, only: %i[index show]
 
   def index
     # @order_details = OrderDetail.all.group_by(&:order_id)
