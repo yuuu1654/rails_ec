@@ -32,11 +32,11 @@ class CheckoutsController < ApplicationController
           total_price: product.price * cart_product[:quantity]
         )
       end
-      flash[:notice] = "購入ありがとうございます"
       # 購入明細をメール送信する
       @order_details = @order.order_details
       OrderMailer.order_detail(@order, @order_details).deliver_now
       reset_session # カートを空にする
+      flash[:notice] = "購入ありがとうございます"
       redirect_to products_path
     else
       set_cart_details # カートの中身が残るようにする
