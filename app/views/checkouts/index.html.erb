@@ -1,0 +1,15 @@
+<%= render "layouts/navigation", cart: @cart %>
+<h1 style="text-align: center; padding: 20px;">購入明細一覧</h1>
+<div class="container mt-4">
+  <%# <h1 class="mb-4">購入明細一覧</h1> %>
+
+  <% @order_details.each do |order_detail| %>
+    <%= link_to order_detail_show_path(order_detail.order_id), class: "text-decoration-none" do %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h3 class="card-title">注文ID : <%= order_detail.order_id %></h3>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

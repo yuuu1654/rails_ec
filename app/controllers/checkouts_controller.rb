@@ -1,5 +1,16 @@
 class CheckoutsController < ApplicationController
-  before_action :current_cart, only: [:create]
+  before_action :current_cart, only: [:index, :show, :create]
+  before_action :basic_auth, only: [:index, :show]
+
+  def index
+    # @order_details = OrderDetail.all.group_by(&:order_id)
+    @order_details = OrderDetail.select(:order_id).distinct.order(:order_id)
+  end
+
+  def show
+    @order = Order.find(params[:order_id])
+    @order_details = @order.order_details
+  end
 
   def create
     @cart_products = @cart.cart_products #カート内の商品を取得

@@ -20,4 +20,8 @@ Rails.application.routes.draw do
   delete 'cart_products/destroy/:product_id', to: 'cart_products#destroy', as: 'remove_from_cart'
   # チェックアウト機能
   post "/checkout", to: "checkouts#create"
+  # 購入明細一覧・詳細ページ
+  get "/order_details/index", to: "checkouts#index", as: "order_details_index"
+  get "/order_details/:order_id/show", to: "checkouts#show", as: "order_detail_show"
+  # resources :order_details, only: [:index, :show]
 end
