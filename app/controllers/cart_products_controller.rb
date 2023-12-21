@@ -14,7 +14,7 @@ class CartProductsController < ApplicationController
   end
 
   def show
-    # @orderの表示エラーが起こらないようにする(→インスタンス変数の初期化)
+    # errorメソッドが呼び出せないのでorderインスタンスを初期化
     @order = Order.new
   end
 
