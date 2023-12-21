@@ -41,7 +41,7 @@ module Admin
 
     def destroy
       @product.destroy
-      flash[:success] = '商品を削除しました'
+      flash[:notice] = "#{@product.name}を削除しました"
       redirect_to admin_products_path, status: :see_other
     end
 
