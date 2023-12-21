@@ -15,19 +15,29 @@ class CheckoutsController < ApplicationController
   end
 
   def create
-    @order = Order.new(order_params)
-    @order.cart_id = @cart.id # buildメソッドが使えなかったので、関連のカートidを直接代入
-    @order.name = "#{params[:order][:name_sei]} #{params[:order][:name_mei]}"
-    @order.address = "#{params[:order][:address1]} #{params[:order][:address2]}"
-    if @order.save
-      create_order_details(@order) # 購入明細情報を保存
-      OrderMailer.order_detail(@order, @order_details).deliver_now # 購入明細をメール送信
-      reset_session # カートを空にする
-      flash[:notice] = '購入ありがとうございます'
+    ActiveRecord::Base.transaction do
+      # 購入者情報と購入明細処理をDBに保存する処理を一つのトランザクションとして実行
+      @order = Order.new(order_params)
+      @order.cart_id = @cart.id
+      @order.name = "#{params[:order][:name_sei]} #{params[:order][:name_mei]}"
+      @order.address = "#{params[:order][:address1]} #{params[:order][:address2]}"
+      
+      if @order.save
+        create_order_details(@order) # 購入明細を保存
+      else
+        raise ActiveRecord::Rollback # バリデーションエラーの時にトランザクションをロールバックする
+      end
+    end
+
+    # トランザクション後の処理
+    if @order.persisted? # @orderが保存済みかどうかをチェック
+      OrderMailer.order_detail(@order, @order_details).deliver_now
+      reset_session # カートを破棄
+      flash[:notice] = 'ご購入ありがとうございます！'
       redirect_to products_path
     else
-      set_cart_details # 再入力時にカートの中身が残るようにする
-      render template: 'cart_products/show'
+      set_cart_details # 再入力時にカートの中身が残っているようにする
+      render template: "cart_products/show"
     end
   end
 
