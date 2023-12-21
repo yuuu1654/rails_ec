@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Order < ApplicationRecord
-  belongs_to :cart, optional: true # orderがなくてもcartは存在する
+  belongs_to :cart
   has_many :order_details, dependent: :destroy
   validates :name, presence: true
   validates :username, presence: true
