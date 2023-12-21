@@ -21,12 +21,10 @@ class CheckoutsController < ApplicationController
       @order.cart_id = @cart.id
       @order.name = "#{params[:order][:name_sei]} #{params[:order][:name_mei]}"
       @order.address = "#{params[:order][:address1]} #{params[:order][:address2]}"
-      
-      if @order.save
-        create_order_details(@order) # 購入明細を保存
-      else
-        raise ActiveRecord::Rollback # バリデーションエラーの時にトランザクションをロールバックする
-      end
+      # バリデーションエラーの時にトランザクションをロールバック
+      raise ActiveRecord::Rollback unless @order.save
+
+      create_order_details(@order) # 購入明細を保存
     end
 
     # トランザクション後の処理
@@ -37,7 +35,7 @@ class CheckoutsController < ApplicationController
       redirect_to products_path
     else
       set_cart_details # 再入力時にカートの中身が残っているようにする
-      render template: "cart_products/show"
+      render template: 'cart_products/show'
     end
   end
 
