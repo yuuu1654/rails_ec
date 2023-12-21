@@ -17,10 +17,7 @@ class CheckoutsController < ApplicationController
   def create
     ActiveRecord::Base.transaction do
       # 購入者情報と購入明細処理をDBに保存する処理を一つのトランザクションとして実行
-      @order = Order.new(order_params)
-      @order.cart_id = @cart.id
-      @order.name = "#{params[:order][:name_sei]} #{params[:order][:name_mei]}"
-      @order.address = "#{params[:order][:address1]} #{params[:order][:address2]}"
+      build_order
       # バリデーションエラーの時にトランザクションをロールバック
       raise ActiveRecord::Rollback unless @order.save
 
@@ -43,6 +40,13 @@ class CheckoutsController < ApplicationController
 
   def order_params
     params.require(:order).permit(:username, :email, :card_name, :card_number, :card_expires, :card_cvv)
+  end
+
+  def build_order
+    @order = Order.new(order_params)
+    @order.cart_id = @cart.id
+    @order.name = "#{params[:order][:name_sei]} #{params[:order][:name_mei]}"
+    @order.address = "#{params[:order][:address1]} #{params[:order][:address2]}"
   end
 
   def create_order_details(order)
