@@ -60,6 +60,7 @@ group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
   gem 'htmlbeautifier'
+  gem 'letter_opener_web'
   gem 'rspec-rails'
 end
 

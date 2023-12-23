@@ -1,0 +1,32 @@
+<h1>購入明細</h1>
+
+<table style="width: 100%; border-collapse: collapse;">
+  <thead>
+    <tr style="background-color: #D8FFEF;">
+      <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">商品名</th>
+      <th style="border: 1px solid #dddddd; text-align: right; padding: 8px;">単価</th>
+      <th style="border: 1px solid #dddddd; text-align: right; padding: 8px;">数量</th>
+      <th style="border: 1px solid #dddddd; text-align: right; padding: 8px;">合計</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order_details.each do |order_detail| %>
+      <tr>
+        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;"><%= order_detail.product_name %></td>
+        <td style="border: 1px solid #dddddd; text-align: right; padding: 8px;">
+          <%= number_to_currency(order_detail.price, unit: "円", format: "%n%u", delimiter: ",", precision: 0) %>
+        </td>
+        <td style="border: 1px solid #dddddd; text-align: right; padding: 8px;"><%= order_detail.quantity %></td>
+        <td style="border: 1px solid #dddddd; text-align: right; padding: 8px;">
+          <%= number_to_currency(order_detail.total_price, unit: "円", format: "%n%u", delimiter: ",", precision: 0) %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="3" style="border: 1px solid #dddddd; text-align: left; padding: 8px; font-weight: bold; background-color: #D8FFEF;">お支払い総額</td>
+      <td style="border: 1px solid #dddddd; text-align: right; padding: 8px;">
+        <%= number_to_currency(@order_details.sum { |item| item.total_price }, unit: "円", format: "%n%u", delimiter: ",", precision: 0) %>
+      </td>
+    </tr>
+  </tbody>
+</table>
