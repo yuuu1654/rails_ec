@@ -40,14 +40,13 @@ class CartProductsController < ApplicationController
       session[:promotion_code] = promotion_code.code
       session[:discount_amount] = promotion_code.discount_amount
       # 請求額を更新
-      set_cart_details
     else
       # 誤ったプロモコードを入力した時もプロモコードの要素が表示されるようにする
       session[:promotion_code] = ''
       session[:discount_amount] = 0
       # 請求額を更新
-      set_cart_details
     end
+    set_cart_details
 
     respond_to do |format|
       format.turbo_stream # update.turbo_stream.erb というファイルを探してくれる
