@@ -174,7 +174,7 @@
                   </div>
                   <span class="text-body-secondary">
                     <%= number_to_currency(item[:total_price], unit: "円", format: "%n%u", delimiter: ",", precision: 0) %>
-                    <%= link_to "削除", remove_from_cart_path(item[:product].id), data: { turbo_method: :delete }, class: "btn btn-danger" %>
+                    <%= link_to "削除", remove_from_cart_path(item[:product].id), remote: true, data: { turbo_method: :delete }, class: "btn btn-danger" %>
                   </span>
                 </li>
               <% end %>

@@ -26,8 +26,12 @@ class CartProductsController < ApplicationController
   def destroy
     @cart_product.destroy
     @product = Product.find(@cart_product.product_id)
-    flash[:notice] = "#{@product.name}を削除しました"
-    redirect_to cart_path
+    redirect_to cart_path, notice: "#{@product.name}を削除しました"
+    # respond_to do |format|
+    #   format.turbo_stream
+    #   format.html { redirect_to cart_path, notice: '商品を削除しました' }
+    # end
+  end
 
   def update
     promotion_code = PromotionCode.find_by(code: params[:code])
