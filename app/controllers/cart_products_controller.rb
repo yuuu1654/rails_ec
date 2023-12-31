@@ -2,8 +2,8 @@
 
 class CartProductsController < ApplicationController
   before_action :set_cart_product, only: %i[create destroy]
-  before_action :current_cart, only: %i[create show]
-  before_action :set_cart_details, only: [:show]
+  before_action :current_cart, only: %i[create show update]
+  # before_action :set_cart_details, only: [:show]
 
   def create
     @cart_product = @cart.cart_products.build(product_id: params[:product_id]) if @cart_product.blank?
@@ -14,8 +14,13 @@ class CartProductsController < ApplicationController
   end
 
   def show
-    # errorメソッドが呼び出せないのでorderインスタンスを初期化
-    @order = Order.new
+    @order = Order.new # errorメソッドを呼べるようにする
+    # todo: カートから商品を削除する処理を非同期で行うように修正 (そうするとカート詳細ページを再読み込みした時にプロモコードが残らないので不自然じゃなくなる)
+    # カートから商品を削除したら割引額が消えるのでコメントアウト▼
+    # session[:promotion_code] = ""
+    # session[:discount_amount] = 0
+    set_cart_details
+    logger.debug "session_promo_code: #{session['promotion_code'].inspect}"
   end
 
   def destroy
@@ -23,6 +28,27 @@ class CartProductsController < ApplicationController
     @product = Product.find(@cart_product.product_id)
     flash[:notice] = "#{@product.name}を削除しました"
     redirect_to cart_path
+
+  def update
+    promotion_code = PromotionCode.find_by(code: params[:code])
+    if promotion_code && !promotion_code.used
+      promotion_code.update(used: true)
+      session[:promotion_code] = promotion_code.code
+      session[:discount_amount] = promotion_code.discount_amount
+      # 請求額を更新
+      set_cart_details
+    else
+      # 誤ったプロモコードを入力した時もプロモコードの要素が表示されるようにする
+      session[:promotion_code] = ''
+      session[:discount_amount] = 0
+      # 請求額を更新
+      set_cart_details
+    end
+
+    respond_to do |format|
+      format.turbo_stream # update.turbo_stream.erb というファイルを探してくれる
+      # format.html { redirect_to cart_path }
+    end
   end
 
   private

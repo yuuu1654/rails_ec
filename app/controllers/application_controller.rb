@@ -26,6 +26,10 @@ class ApplicationController < ActionController::Base
       total_price = product.price * item.quantity
       { product:, quantity: item.quantity, total_price: }
     end
-    @billed_amount = @cart_details.sum { |item| item[:total_price] }
+    total_amount = @cart_details.sum { |item| item[:total_price] }
+    discount_amount = session[:discount_amount] ? session[:discount_amount].to_i : 0
+    @billed_amount = total_amount - discount_amount
+    @billed_amount = @billed_amount.negative? ? 0 : @billed_amount
+    session[:billed_amount] = @billed_amount
   end
 end
