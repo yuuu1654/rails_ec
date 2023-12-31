@@ -232,50 +232,50 @@
               <div class="row g-3">
                 <div class="col-sm-6">
                   <%= f.label :name_sei, "姓", class: "form-label" %>
-                  <%= f.text_field :name_sei, class: "form-control" %>
+                  <%= f.text_field :name_sei, class: "form-control", placeholder: "姓" %>
                 </div>
                 <div class="col-sm-6">
                   <%= f.label :name_mei, "名", class: "form-label" %>
-                  <%= f.text_field :name_mei, class: "form-control" %>
+                  <%= f.text_field :name_mei, class: "form-control", placeholder: "名" %>
                 </div>
                 <div class="col-12">
                   <%= f.label :username, "ユーザー名", class: "form-label" %>
                   <div class="input-group has-validation">
                     <span class="input-group-text">@</span>
-                    <%= f.text_field :username, class: "form-control" %>
+                    <%= f.text_field :username, class: "form-control", placeholder: "ユーザー名" %>
                   </div>
                 </div>
                 <div class="col-12">
                   <%= f.label :email, "メールアドレス", class: "form-label" %>
-                  <%= f.text_field :email, class: "form-control" %>
+                  <%= f.text_field :email, class: "form-control", placeholder: "example@example.com" %>
                 </div>
               </div>
               <div class="col-12">
                 <%= f.label :address1, "住所1 (市区町村)", class: "form-label" %>
-                <%= f.text_field :address1, class: "form-control" %>
+                <%= f.text_field :address1, class: "form-control", placeholder: "大阪府大阪市淀川区" %>
               </div>
               <div class="col-12">
                 <%= f.label :address2, "住所2 (番地・マンション名など)", class: "form-label" %>
-                <%= f.text_field :address2, class: "form-control" %>
+                <%= f.text_field :address2, class: "form-control", placeholder: "1-12-13 サンプルハイツ101号室" %>
               </div>
               <hr class="my-4">
               <h4 class="mb-3">クレジットカード情報</h4>
               <div class="row gy-3">
                 <div class="col-md-6">
                   <%= f.label :card_name, "名義人", class: "form-label" %>
-                  <%= f.text_field :card_name, class: "form-control" %>
+                  <%= f.text_field :card_name, class: "form-control", placeholder: "YAMADA ICHIRO" %>
                 </div>
                 <div class="col-md-6">
                   <%= f.label :card_number, "カード番号", class: "form-label" %>
-                  <%= f.text_field :card_number, class: "form-control" %>
+                  <%= f.text_field :card_number, class: "form-control", placeholder: "1234 1234 1234 1234" %>
                 </div>
                 <div class="col-md-3">
                   <%= f.label :card_expires, "有効期限", class: "form-label" %>
-                  <%= f.text_field :card_expires, class: "form-control" %>
+                  <%= f.text_field :card_expires, class: "form-control", placeholder: "MM/YY" %>
                 </div>
                 <div class="col-md-3">
                   <%= f.label :card_cvv, "CVV", class: "form-label" %>
-                  <%= f.text_field :card_cvv, class: "form-control" %>
+                  <%= f.text_field :card_cvv, class: "form-control", placeholder: "123" %>
                 </div>
               </div>
               <hr class="my-4">
