@@ -47,6 +47,8 @@ class CheckoutsController < ApplicationController
     @order.cart_id = @cart.id
     @order.name = "#{params[:order][:name_sei]} #{params[:order][:name_mei]}"
     @order.address = "#{params[:order][:address1]} #{params[:order][:address2]}"
+    set_cart_details # 割引を考慮した請求額を算出 (todo: モデルに処理を移行)
+    @order.billed_amount = @billed_amount
   end
 
   def create_order_details(order)

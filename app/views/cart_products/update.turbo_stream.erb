@@ -1,0 +1,25 @@
+<% if session["promotion_code"] %>
+  <%= turbo_stream.update "promotion_code_info__code" do %>
+    <div id="promotion_code_info__code">
+      <%= session["promotion_code"] %>
+    </div>
+  <% end %>
+<% end %>
+
+<% if session["discount_amount"] %>
+  <%= turbo_stream.update "promotion_code_info__discount_amount" do %>
+    <% if session["discount_amount"].to_i > 0 %>
+      -<%= number_to_currency(session["discount_amount"], unit: "円", format: "%n%u", delimiter: ",", precision: 0) %>
+    <% else %>
+      -
+    <% end %>
+  <% end %>
+<% end %>
+
+<% if session["billed_amount"] %>
+  <%= turbo_stream.update "billed_amount" do %>
+    <%= number_to_currency(session["billed_amount"], unit: "円", format: "%n%u", delimiter: ",", precision: 0) %>
+  <% end %>
+<% end %>
+
+
