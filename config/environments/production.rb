@@ -106,5 +106,5 @@ Rails.application.configure do
     authentication: 'plain'
   }
 
-  Rails.application.config.hosts << "rails-ec-site.onrender.com"
+  Rails.application.config.hosts << 'rails-ec-site.onrender.com'
 end
