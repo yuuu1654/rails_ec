@@ -26,7 +26,7 @@ class CheckoutsController < ApplicationController
 
     # トランザクション後の処理
     if @order.persisted? # @orderが保存済みかどうかをチェック
-      OrderMailer.order_detail(@order, @order_details).deliver_now
+      # OrderMailer.order_detail(@order, @order_details).deliver_now
       reset_session # カートを破棄
       flash[:notice] = 'ご購入ありがとうございます！'
       redirect_to products_path
