@@ -1,7 +1,7 @@
 databases:
   - name: rails_ec_db
     databaseName: rails_ec_db
-    user: rails-ec-site
+    user: rails_ec_db_user
     region: singapore
 
 services:
