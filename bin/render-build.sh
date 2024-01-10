@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # exit on error
-set -o errexit
+set -o errexit # 途中でエラーが発生した時に残りのコマンドが実行されるのを防ぐ
 
 bundle install
 bundle exec rake assets:precompile
