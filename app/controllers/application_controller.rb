@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # カート詳細ページで、カートに入っている商品毎の個数、値段、などの「表示に必要な項目」を算出する
   def set_cart_details
     @cart_products = @cart.cart_products
     @cart_details = @cart_products.map do |item|
@@ -25,6 +26,10 @@ class ApplicationController < ActionController::Base
       total_price = product.price * item.quantity
       { product:, quantity: item.quantity, total_price: }
     end
-    @billed_amount = @cart_details.sum { |item| item[:total_price] }
+    total_amount = @cart_details.sum { |item| item[:total_price] }
+    discount_amount = session[:discount_amount] ? session[:discount_amount].to_i : 0
+    @billed_amount = total_amount - discount_amount
+    @billed_amount = @billed_amount.negative? ? 0 : @billed_amount
+    session[:billed_amount] = @billed_amount
   end
 end

@@ -105,4 +105,6 @@ Rails.application.configure do
     domain: 'rails-ec-site-e0a2d7374784.herokuapp.com',
     authentication: 'plain'
   }
+
+  Rails.application.config.hosts << 'rails-ec-site.onrender.com'
 end

@@ -154,7 +154,7 @@
     <div class="container px-4 px-lg-5 mt-5">
       <main>
         <div class="row g-5">
-          <%= render "shared/flash" %>
+          <%= render "shared/notice" %>
           <div class="col-md-6 col-lg-5 order-md-last">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
               <span class="text-primary">ショッピングカート</span>
@@ -174,30 +174,47 @@
                   </div>
                   <span class="text-body-secondary">
                     <%= number_to_currency(item[:total_price], unit: "円", format: "%n%u", delimiter: ",", precision: 0) %>
-                    <%= link_to "削除", remove_from_cart_path(item[:product].id), data: { turbo_method: :delete }, class: "btn btn-danger" %>
+                    <%= link_to "削除", remove_from_cart_path(item[:product].id), remote: true, data: { turbo_method: :delete }, class: "btn btn-danger" %>
                   </span>
                 </li>
               <% end %>
               <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
                 <div class="text-success">
                   <h6 class="my-0">プロモーションコード</h6>
-                  <small>EXAMPLECODE</small>
+                  <small>
+                    <div id="promotion_code_info__code">
+                      <!-- プロモーションコード -->
+                      <%= session["promotion_code"] %>
+                    </div>
+                  </small>
                 </div>
-                <span class="text-success">−$5</span>
+                <span class="text-success">
+                  <div id="promotion_code_info__discount_amount">
+                    <!-- 割引額 -->
+                    <% if session["discount_amount"].to_i > 0 %>
+                      -<%= number_to_currency(session["discount_amount"], unit: "円", format: "%n%u", delimiter: ",", precision: 0) %>
+                    <% else %>
+                      -
+                    <% end %>
+                  </div>
+                </span>
               </li>
               <li class="list-group-item d-flex justify-content-between">
                 <span>ご請求額</span>
                 <strong>
-                  <%= number_to_currency(@billed_amount, unit: "円", format: "%n%u", delimiter: ",", precision: 0) %>
+                  <div id="billed_amount">
+                    <!-- 最終的な請求額 -->
+                    <%= number_to_currency(session["billed_amount"], unit: "円", format: "%n%u", delimiter: ",", precision: 0) %>
+                  </div>
                 </strong>
               </li>
             </ul>
-            <form class="card p-2">
+            <%= form_with(url: cart_products_update_path, class: "card p-2", local: true) do |f| %>
               <div class="input-group">
-                <input type="text" class="form-control" placeholder="Promo code">
-                <button type="submit" class="btn btn-secondary">Redeem</button>
+                <%= f.text_field :code, class: "form-control", placeholder: "Promo code" %>
+                <%= f.submit "割引を適用", class: "btn btn-secondary" %>
               </div>
-            </form>
+            <% end %>
           </div>
           <div class="col-md-6 col-lg-7">
             <h4 class="mb-3">請求先住所</h4>
@@ -214,50 +231,50 @@
               <div class="row g-3">
                 <div class="col-sm-6">
                   <%= f.label :name_sei, "姓", class: "form-label" %>
-                  <%= f.text_field :name_sei, class: "form-control" %>
+                  <%= f.text_field :name_sei, class: "form-control", placeholder: "姓" %>
                 </div>
                 <div class="col-sm-6">
                   <%= f.label :name_mei, "名", class: "form-label" %>
-                  <%= f.text_field :name_mei, class: "form-control" %>
+                  <%= f.text_field :name_mei, class: "form-control", placeholder: "名" %>
                 </div>
                 <div class="col-12">
                   <%= f.label :username, "ユーザー名", class: "form-label" %>
                   <div class="input-group has-validation">
                     <span class="input-group-text">@</span>
-                    <%= f.text_field :username, class: "form-control" %>
+                    <%= f.text_field :username, class: "form-control", placeholder: "ユーザー名" %>
                   </div>
                 </div>
                 <div class="col-12">
                   <%= f.label :email, "メールアドレス", class: "form-label" %>
-                  <%= f.text_field :email, class: "form-control" %>
+                  <%= f.text_field :email, class: "form-control", placeholder: "example@example.com" %>
                 </div>
               </div>
               <div class="col-12">
                 <%= f.label :address1, "住所1 (市区町村)", class: "form-label" %>
-                <%= f.text_field :address1, class: "form-control" %>
+                <%= f.text_field :address1, class: "form-control", placeholder: "大阪府大阪市淀川区" %>
               </div>
               <div class="col-12">
                 <%= f.label :address2, "住所2 (番地・マンション名など)", class: "form-label" %>
-                <%= f.text_field :address2, class: "form-control" %>
+                <%= f.text_field :address2, class: "form-control", placeholder: "1-12-13 サンプルハイツ101号室" %>
               </div>
               <hr class="my-4">
               <h4 class="mb-3">クレジットカード情報</h4>
               <div class="row gy-3">
                 <div class="col-md-6">
                   <%= f.label :card_name, "名義人", class: "form-label" %>
-                  <%= f.text_field :card_name, class: "form-control" %>
+                  <%= f.text_field :card_name, class: "form-control", placeholder: "YAMADA ICHIRO" %>
                 </div>
                 <div class="col-md-6">
                   <%= f.label :card_number, "カード番号", class: "form-label" %>
-                  <%= f.text_field :card_number, class: "form-control" %>
+                  <%= f.text_field :card_number, class: "form-control", placeholder: "1234 1234 1234 1234" %>
                 </div>
                 <div class="col-md-3">
                   <%= f.label :card_expires, "有効期限", class: "form-label" %>
-                  <%= f.text_field :card_expires, class: "form-control" %>
+                  <%= f.text_field :card_expires, class: "form-control", placeholder: "MM / YY" %>
                 </div>
                 <div class="col-md-3">
                   <%= f.label :card_cvv, "CVV", class: "form-label" %>
-                  <%= f.text_field :card_cvv, class: "form-control" %>
+                  <%= f.text_field :card_cvv, class: "form-control", placeholder: "123" %>
                 </div>
               </div>
               <hr class="my-4">

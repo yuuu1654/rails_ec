@@ -26,7 +26,7 @@ class CheckoutsController < ApplicationController
 
     # トランザクション後の処理
     if @order.persisted? # @orderが保存済みかどうかをチェック
-      OrderMailer.order_detail(@order, @order_details).deliver_now
+      # OrderMailer.order_detail(@order, @order_details).deliver_now
       reset_session # カートを破棄
       flash[:notice] = 'ご購入ありがとうございます！'
       redirect_to products_path
@@ -47,6 +47,8 @@ class CheckoutsController < ApplicationController
     @order.cart_id = @cart.id
     @order.name = "#{params[:order][:name_sei]} #{params[:order][:name_mei]}"
     @order.address = "#{params[:order][:address1]} #{params[:order][:address2]}"
+    set_cart_details # 割引を考慮した請求額を算出 (todo: モデルに処理を移行)
+    @order.billed_amount = @billed_amount
   end
 
   def create_order_details(order)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_09_144528) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_28_054105) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -80,12 +80,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_09_144528) do
     t.string "card_cvv"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "billed_amount"
     t.index ["cart_id"], name: "index_orders_on_cart_id"
   end
+
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.integer "price"
     t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "promotion_codes", force: :cascade do |t|
+    t.string "code"
+    t.integer "discount_amount"
+    t.boolean "used", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
