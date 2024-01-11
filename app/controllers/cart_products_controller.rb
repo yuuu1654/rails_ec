@@ -15,10 +15,6 @@ class CartProductsController < ApplicationController
 
   def show
     @order = Order.new # errorメソッドを呼べるようにする
-    # todo: カートから商品を削除する処理を非同期で行うように修正 (そうするとカート詳細ページを再読み込みした時にプロモコードが残らないので不自然じゃなくなる)
-    # カートから商品を削除したら割引額が消えるのでコメントアウト▼
-    # session[:promotion_code] = ""
-    # session[:discount_amount] = 0
     set_cart_details
     logger.debug "session_promo_code: #{session['promotion_code'].inspect}"
   end
@@ -26,16 +22,15 @@ class CartProductsController < ApplicationController
   def update
     promotion_code = PromotionCode.find_by(code: params[:code])
     if promotion_code && !promotion_code.used
-      promotion_code.update(used: true)
+      promotion_code.update(used: true) # ←promotion_codeモデルに移植
       session[:promotion_code] = promotion_code.code
       session[:discount_amount] = promotion_code.discount_amount
-      # 請求額を更新
     else
       # 誤ったプロモコードを入力した時もプロモコードの要素が表示されるようにする
       session[:promotion_code] = ''
       session[:discount_amount] = 0
-      # 請求額を更新
     end
+    # 請求額を更新
     set_cart_details
 
     respond_to do |format|
