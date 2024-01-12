@@ -262,19 +262,19 @@
               <div class="row gy-3">
                 <div class="col-md-6">
                   <%= f.label :card_name, "名義人", class: "form-label" %>
-                  <%= f.text_field :card_name, class: "form-control", placeholder: "YAMADA ICHIRO", autocomplete: "new-off" %>
+                  <%= f.text_field :card_name, class: "form-control", placeholder: "YAMADA ICHIRO", autocomplete: "cc-number" %>
                 </div>
                 <div class="col-md-6">
                   <%= f.label :card_number, "カード番号", class: "form-label" %>
-                  <%= f.text_field :card_number, class: "form-control", placeholder: "1234 1234 1234 1234", autocomplete: "new-off" %>
+                  <%= f.text_field :card_number, class: "form-control", placeholder: "1234 1234 1234 1234", autocomplete: "cc-number" %>
                 </div>
                 <div class="col-md-3">
                   <%= f.label :card_expires, "有効期限", class: "form-label" %>
-                  <%= f.text_field :card_expires, class: "form-control", placeholder: "MM / YY", autocomplete: "new-off" %>
+                  <%= f.text_field :card_expires, class: "form-control", placeholder: "MM / YY", autocomplete: "cc-exp" %>
                 </div>
                 <div class="col-md-3">
                   <%= f.label :card_cvv, "CVV", class: "form-label" %>
-                  <%= f.text_field :card_cvv, class: "form-control", placeholder: "123", autocomplete: "new-off" %>
+                  <%= f.text_field :card_cvv, class: "form-control", placeholder: "123", autocomplete: "cc-csc" %>
                 </div>
               </div>
               <hr class="my-4">
