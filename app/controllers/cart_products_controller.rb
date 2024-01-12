@@ -22,11 +22,11 @@ class CartProductsController < ApplicationController
   def update
     promotion_code = PromotionCode.find_by(code: params[:code])
     if promotion_code && !promotion_code.used
-      promotion_code.update(used: true) # ←promotion_codeモデルに移植
+      promotion_code.update(used: true) # ←promotion_codeモデルに移植。また、本来プロモコードを使用済みにするのはチェックアウトが完了した時では？(要検討)
       session[:promotion_code] = promotion_code.code
       session[:discount_amount] = promotion_code.discount_amount
     else
-      # 誤ったプロモコードを入力した時もプロモコードの要素が表示されるようにする
+      # ▼すでにプロモコードが反映されていて、間違ったプロモコードを入力した時に反映されるようにする為
       session[:promotion_code] = ''
       session[:discount_amount] = 0
     end

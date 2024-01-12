@@ -14,6 +14,7 @@ class CheckoutsController < ApplicationController
     @order_details = @order.order_details
   end
 
+  # 購入処理
   def create
     ActiveRecord::Base.transaction do
       # 購入者情報と購入明細処理をDBに保存する処理を一つのトランザクションとして実行

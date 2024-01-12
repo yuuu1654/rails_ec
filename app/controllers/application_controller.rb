@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # カート詳細ページで、カートに入っている商品毎の個数、値段、などの「表示に必要な項目」を算出する
+  # カート詳細ページで、カートに入っている商品毎の個数、値段、などの「表示に必要な項目」を算出する (Helperに切り出す？(要検討))
   def set_cart_details
     @cart_products = @cart.cart_products
     @cart_details = @cart_products.map do |item|
