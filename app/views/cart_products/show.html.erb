@@ -211,7 +211,7 @@
             </ul>
             <%= form_with(url: cart_products_update_path, class: "card p-2", local: true) do |f| %>
               <div class="input-group">
-                <%= f.text_field :code, class: "form-control", placeholder: "Promo code" %>
+                <%= f.text_field :code, class: "form-control", placeholder: "Promo code", autocomplete: "new-off" %>
                 <%= f.submit "割引を適用", class: "btn btn-secondary" %>
               </div>
             <% end %>
@@ -231,50 +231,50 @@
               <div class="row g-3">
                 <div class="col-sm-6">
                   <%= f.label :name_sei, "姓", class: "form-label" %>
-                  <%= f.text_field :name_sei, class: "form-control", placeholder: "姓" %>
+                  <%= f.text_field :name_sei, class: "form-control", placeholder: "姓", autocomplete: "new-off" %>
                 </div>
                 <div class="col-sm-6">
                   <%= f.label :name_mei, "名", class: "form-label" %>
-                  <%= f.text_field :name_mei, class: "form-control", placeholder: "名" %>
+                  <%= f.text_field :name_mei, class: "form-control", placeholder: "名", autocomplete: "new-off" %>
                 </div>
                 <div class="col-12">
                   <%= f.label :username, "ユーザー名", class: "form-label" %>
                   <div class="input-group has-validation">
                     <span class="input-group-text">@</span>
-                    <%= f.text_field :username, class: "form-control", placeholder: "ユーザー名" %>
+                    <%= f.text_field :username, class: "form-control", placeholder: "ユーザー名", autocomplete: "new-off" %>
                   </div>
                 </div>
                 <div class="col-12">
                   <%= f.label :email, "メールアドレス", class: "form-label" %>
-                  <%= f.text_field :email, class: "form-control", placeholder: "example@example.com" %>
+                  <%= f.text_field :email, class: "form-control", placeholder: "example@example.com", autocomplete: "new-off" %>
                 </div>
               </div>
               <div class="col-12">
                 <%= f.label :address1, "住所1 (市区町村)", class: "form-label" %>
-                <%= f.text_field :address1, class: "form-control", placeholder: "大阪府大阪市淀川区" %>
+                <%= f.text_field :address1, class: "form-control", placeholder: "大阪府大阪市淀川区", autocomplete: "new-off" %>
               </div>
               <div class="col-12">
                 <%= f.label :address2, "住所2 (番地・マンション名など)", class: "form-label" %>
-                <%= f.text_field :address2, class: "form-control", placeholder: "1-12-13 サンプルハイツ101号室" %>
+                <%= f.text_field :address2, class: "form-control", placeholder: "1-12-13 サンプルハイツ101号室", autocomplete: "new-off" %>
               </div>
               <hr class="my-4">
               <h4 class="mb-3">クレジットカード情報</h4>
               <div class="row gy-3">
                 <div class="col-md-6">
                   <%= f.label :card_name, "名義人", class: "form-label" %>
-                  <%= f.text_field :card_name, class: "form-control", placeholder: "YAMADA ICHIRO" %>
+                  <%= f.text_field :card_name, class: "form-control", placeholder: "YAMADA ICHIRO", autocomplete: "new-off" %>
                 </div>
                 <div class="col-md-6">
                   <%= f.label :card_number, "カード番号", class: "form-label" %>
-                  <%= f.text_field :card_number, class: "form-control", placeholder: "1234 1234 1234 1234" %>
+                  <%= f.text_field :card_number, class: "form-control", placeholder: "1234 1234 1234 1234", autocomplete: "new-off" %>
                 </div>
                 <div class="col-md-3">
                   <%= f.label :card_expires, "有効期限", class: "form-label" %>
-                  <%= f.text_field :card_expires, class: "form-control", placeholder: "MM / YY" %>
+                  <%= f.text_field :card_expires, class: "form-control", placeholder: "MM / YY", autocomplete: "new-off" %>
                 </div>
                 <div class="col-md-3">
                   <%= f.label :card_cvv, "CVV", class: "form-label" %>
-                  <%= f.text_field :card_cvv, class: "form-control", placeholder: "123" %>
+                  <%= f.text_field :card_cvv, class: "form-control", placeholder: "123", autocomplete: "new-off" %>
                 </div>
               </div>
               <hr class="my-4">
